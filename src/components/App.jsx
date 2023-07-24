@@ -11,15 +11,20 @@ import { useAuth } from 'hooks/index';
 import RestrictedRoute from 'routes/RestrictedRoute';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import NotFound from './NotFound/NotFound';
+import Error from './Error/Error';
 
 function App() {
-  const { isRefreshing, isLoggedIn } = useAuth();
+  const { isRefreshing, isLoggedIn, error } = useAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
- 
+
+  if (error) {
+    return <Error />;
+  } 
+
   return isRefreshing ? (<div>Loading...</div>) : (
     <div>
       <Routes>

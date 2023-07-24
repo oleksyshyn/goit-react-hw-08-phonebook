@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function ContactsList() {
-    const {items, isLoading, error} = useSelector(selectContacts);
+    const {items, isLoading} = useSelector(selectContacts);
     const filter = useSelector(selectFilter);
     const dispatch = useDispatch();
 
@@ -23,10 +23,6 @@ function ContactsList() {
   
     if (isLoading) {
         return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return "Error: " + error;
     }
 
     return (

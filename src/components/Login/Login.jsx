@@ -6,18 +6,31 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleLogin = async () => {
-        await dispatch(logIn({ email, password }));
-        setEmail('');
-        setPassword('');
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        if (!email || !password) {
+            setError('Please fill all fields');
+            return;
+        }
+        try {
+            await dispatch(logIn({ email, password }));
+
+            setEmail('');
+            setPassword('');
+        } catch (error) {
+            setError('Invalid email or password');
+        }
+        
     }
 
     return (
@@ -31,6 +44,11 @@ function Login() {
             }}
         >
             <Typography variant="h4" component="h2">Login</Typography>
+
+            {error && (
+                <Alert severity="error">{error}</Alert>
+            )}
+
             <Box
                 sx={{
                 display: 'flex',
@@ -45,14 +63,20 @@ function Login() {
             >
                 <TextField
                     type="email"
+                    name="email"
                     placeholder="Enter your email"
                     value={email}
+                    label="Email"
+                    required
                     onChange={(event) => setEmail(event.target.value)}
                 />
                 <TextField
                     type="password"
+                    name="password"
                     placeholder="Enter your password"
+                    label="Password"
                     value={password}
+                    required
                     onChange={(event) => setPassword(event.target.value)}
                 />
                 <Box
@@ -64,7 +88,7 @@ function Login() {
                     }}
                     gap={2}
                 >
-                    <Button variant="contained" onClick={handleLogin}>Login</Button>
+                    <Button variant="contained" type="submit" onClick={handleLogin}>Login</Button>
                     <Button variant="outlined" onClick={() => { navigate('/register') }}>Go to register page</Button>
                 </Box>
                 

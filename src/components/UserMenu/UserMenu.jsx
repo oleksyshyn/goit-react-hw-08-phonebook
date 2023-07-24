@@ -30,7 +30,7 @@ const UserMenu = () => {
             gap={1}
             >
                 <AccountCircleIcon></AccountCircleIcon>
-                <Typography variant="body1" component="p">{user.name}</Typography>
+                <Typography variant="body1" component="p">{user.email}</Typography>
             </Box>
             
             <Button variant="outlined" size="small" onClick={onLogout}>Logout</Button>
