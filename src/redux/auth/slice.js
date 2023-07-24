@@ -13,30 +13,41 @@ const authSlice = createSlice({
     name: 'contacts',
     initialState,
     extraReducers: {
+        [register.pending](state) {
+            state.isRefreshing = true;
+        },
         [register.fulfilled](state, action) {
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isLoggedIn = true;
-            state.isAuthError = false;
+            state.isRefreshing = false;
         },
-        [register.rejected](state) {
-            state.isAuthError = false;
+        [register.rejected](state, action) {
+            state.isAuthError = action.payload;
+        },
+        [logIn.pending](state) {
+            state.isRefreshing = true;
         },
         [logIn.fulfilled](state, action) {
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isLoggedIn = true;
-            state.isAuthError = false;
+            state.isRefreshing = false;
         },
-        [logIn.rejected](state) {
-            state.isAuthError = false;
+        [logIn.rejected](state, action) {
+            state.isAuthError = action.payload;
+        },
+        [logout.pending](state) {
+            state.isRefreshing = true;
         },
         [logout.fulfilled](state) {
             state.user = { name: null, email: null, password: null };
             state.token = null;
             state.isLoggedIn = false;
             state.isRefreshing = false;
-            state.isAuthError = null;
+        },
+        [logout.rejected](state, action) {
+            state.isAuthError = action.payload;
         },
         [refreshUser.pending](state) {
             state.isRefreshing = true;
