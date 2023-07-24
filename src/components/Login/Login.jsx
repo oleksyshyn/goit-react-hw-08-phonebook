@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux"; 
 import { useNavigate } from "react-router-dom";
 import { logIn } from "redux/auth/operations";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -17,23 +21,56 @@ function Login() {
     }
 
     return (
-        <div>
-            <div>Login</div>
-            <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
-            <button onClick={() => {navigate('/register')}}>Go to register page</button>
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: '5rem',
+                
+            }}
+        >
+            <Typography variant="h4" component="h2">Login</Typography>
+            <Box
+                sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '1rem',
+                width: '100%',
+                maxWidth: '500px',
+                '& .MuiTextField-root': {
+                        marginBottom: '1rem',
+                    },
+                }}
+            >
+                <TextField
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                />
+                <TextField
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                    }}
+                    gap={2}
+                >
+                    <Button variant="contained" onClick={handleLogin}>Login</Button>
+                    <Button variant="outlined" onClick={() => { navigate('/register') }}>Go to register page</Button>
+                </Box>
+                
+            </Box>
+            
+        </Box>
     )
 }
 

@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectContacts } from 'redux/contacts/selectors';
 import { addContact } from 'redux/contacts/operations';
 import { nanoid } from 'nanoid';
-import css from './ContactForm.module.css';
 import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 function ContactForm() {
     const [name, setName] = useState('');
@@ -35,37 +37,56 @@ function ContactForm() {
     }
 
     return (
-        <div className={css.contact_form}>
-            <form onSubmit={formSubmitHandler}>
-                <label className={css.label}>
-                    Name
-                    <input
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: '1rem',
+            }}
+        >
+            <form onSubmit={formSubmitHandler} style={{width: '100%'}}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        margin: '0 auto',
+                        width: '100%',
+                        maxWidth: '500px',
+                        '& .MuiTextField-root': {
+                            marginBottom: '1rem',
+                        },
+                    }}
+                >
+                    <TextField
                         type="text"
                         name="name"
+                        label="Name"
                         pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                         required
+                        fullWidth
                         value={name}
                         onChange={handleNameChange}
-                        className={css.input}
                     />
-                </label>
-                <label className={css.label}>
-                    Number
-                    <input
+
+                    <TextField
                         type="tel"
                         name="number"
+                        label="Number"
                         pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
                         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                         required
+                        fullWidth
                         value={number}
                         onChange={handleNumberChange}
-                        className={css.input}
                     />
-                </label>
-                <button type="submit" className={css.button}>Add contact</button>
+                    <Button variant="contained" type="submit">Add contact</Button>
+                </Box>
             </form>
-        </div>
+           
+        </Box>
     );
 }
 

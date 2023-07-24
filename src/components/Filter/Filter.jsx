@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'redux/contacts/selectors';
 import { setFilter } from 'redux/contacts/contactsSlice';
 import PropTypes from 'prop-types';
-import css from './Filter.module.css';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 function Filter() {
     const filter = useSelector(selectFilter);
@@ -14,14 +16,21 @@ function Filter() {
     }
 
     return (
-        <div>
-            <p className={css.filter_title} >Find contacts by name</p>
-            <input
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: '2rem',
+            }}
+        >
+            <Typography variant="h5" component="p">Find contacts by name</Typography>
+            <TextField
                 type="text"
                 value={filter}
                 onChange={handleFilterChange}
             />
-        </div>
+        </Box>
     )
 }
 

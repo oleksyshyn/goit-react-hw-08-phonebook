@@ -1,8 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { selectContacts, selectFilter } from 'redux/contacts/selectors';
 import { deleteContact } from 'redux/contacts/operations';
-import css from './ContactsList.module.css';
 import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function ContactsList() {
     const {items, isLoading, error} = useSelector(selectContacts);
@@ -26,14 +30,43 @@ function ContactsList() {
     }
 
     return (
-        <ul>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
+            <List>
             {filteredContacts.map(({ id, name, number }) => (
-                <li className={css.contacts_list_item} key={id}>
-                    <p className={css.contact}>{name}: {number}</p>
-                    <button className={css.button} onClick={() => deleteContactHandler(id)}>Delete</button>
+                <li key={id}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginTop: '1rem',
+                            
+                        }}
+                        gap={10}
+                    >
+                        <Box
+                            sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                        gap={1}
+                        >
+                            <AccountCircleIcon></AccountCircleIcon>
+                            <Typography>{name}</Typography>
+                        </Box>
+                        <Typography>{number}</Typography>
+                        <Button color="error" variant="contained" size="small" onClick={() => deleteContactHandler(id)}>Delete</Button>
+                    </Box>
                 </li>
             ))}
-        </ul>
+            </List>
+        </Box>
     )
 }
 
