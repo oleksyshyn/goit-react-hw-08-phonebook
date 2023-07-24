@@ -10,6 +10,7 @@ import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks/index';
 import RestrictedRoute from 'routes/RestrictedRoute';
 import ProtectedRoute from 'routes/ProtectedRoute';
+import NotFound from './NotFound/NotFound';
 
 function App() {
   const { isRefreshing, isLoggedIn } = useAuth();
@@ -38,7 +39,7 @@ function App() {
             }
           />
         </Route>
-        {/* <Route path="*" element={ <NotFound />} /> */}
+        <Route path="*" element={ <NotFound />} />
       </Routes>
     </div>
   );
